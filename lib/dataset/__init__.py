@@ -10,3 +10,4 @@ from __future__ import print_function
 
 from .coco_hoe import COCO_HOE_Dataset
 from .tud import tud_dataset
+from .cocoangle import COCO_ANGLE_Dataset
