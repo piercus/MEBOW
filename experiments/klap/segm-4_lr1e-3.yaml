@@ -113,7 +113,7 @@ TEST:
   BBOX_THRE: 1.0
   IMAGE_THRE: 0.0
   IN_VIS_THRE: 0.2
-  MODEL_FILE: 'output/COCO_ANGLE_Dataset/pose_hrnet/segm-4_lr1e-3/model_best.pth'
+  MODEL_FILE: 'output/COCO_ANGLE_Dataset/pose_hrnet/segm-4_lr1e-3/model_hboe.pth'
   NMS_THRE: 1.0
   OKS_THRE: 0.9
   USE_GT_BBOX: true
