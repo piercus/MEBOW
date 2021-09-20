@@ -536,6 +536,7 @@ def get_pose_net(cfg, is_train, **kwargs):
 if __name__ == "__main__":
     import sys
     sys.path.append(".")
+    sys.path.append("./lib")
     import argparse
     import experiments
     import config
@@ -546,7 +547,7 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
     args = parser.parse_args()
-    args.cfg = "experiments/w32_256x192_adam_lr1e-3.yaml"
+    args.cfg = "experiments/coco/segm-4_lr1e-3.yaml"
     args.opts, args.modelDir, args.logDir, args.dataDir = "", "", "", ""
     update_config(cfg, args)
     model = PoseHighResolutionNet(cfg)

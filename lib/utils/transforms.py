@@ -175,7 +175,7 @@ def adjust_aspect_ratio(s, aspect_ratio, fit_short_side=False):
             w = h * aspect_ratio
     return np.array([w, h])
 
-def hoe_heatmap_gen(label, output_len, gaussian_kernel=11, sigma=1.7):
+def hoe_heatmap_gen(label, output_len, sigma=1.7):
     gaussian_kernel = 6 * int(sigma) + 1
     ret = np.zeros((output_len), dtype='float32')
     kernel = signal.gaussian(gaussian_kernel, sigma)

@@ -136,6 +136,17 @@ def main():
         use_target_weight=cfg.LOSS.USE_TARGET_WEIGHT
     ).cuda()
     criterions['hoe_loss'] = torch.nn.MSELoss().cuda()
+    criterions['azimuth_loss'] = torch.nn.MSELoss().cuda()
+    criterions['polar_loss'] = torch.nn.MSELoss().cuda()
+    criterions['obj_scale_loss'] = torch.nn.MSELoss().cuda()
+    
+    loss_weights = {
+      '2d_pose_loss': 10.0,
+      'hoe_loss': 1.0,
+      'azimuth_loss': 1.0,
+      'polar_loss': 0.0000001,
+      'obj_scale_loss': 0.0000001
+    }
 
     # Data loading code
     normalize = transforms.Normalize(
@@ -213,7 +224,6 @@ def main():
             cfg, valid_loader, valid_dataset, model, criterions,
             final_output_dir, tb_log_dir, writer_dict
         )
-
         if perf_indicator <= best_perf:
             best_perf = perf_indicator
             best_model = True
@@ -221,8 +231,12 @@ def main():
             best_model = False
 
         lr_scheduler.step()
-        logger.info('=> saving checkpoint to {}'.format(final_output_dir))
-        logger.info('best_model{}'.format(best_perf))
+
+        logger.info('=> saving checkpoint to {}/checkpoint.pth'.format(final_output_dir))
+        if(best_model):
+          logger.info('=> saving checkpoint to {}/model_best.pth'.format(final_output_dir))
+
+        
         save_checkpoint({
             'epoch': epoch + 1,
             'model': cfg.MODEL.NAME,

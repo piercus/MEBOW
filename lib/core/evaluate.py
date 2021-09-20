@@ -67,7 +67,7 @@ def accuracy(output, target, hm_type='gaussian', thr=0.5):
         acc[0] = avg_acc
     return acc, avg_acc, cnt, pred
 
-def continous_comp_deg_error(output, gt_degree):
+def continous_comp_deg_error(output, gt_degree, step):
     result = 0
     index_degree = output.argmax(axis = 1)
     excellent = 0
@@ -76,7 +76,7 @@ def continous_comp_deg_error(output, gt_degree):
     poor = 0
     poor_45 = 0
     for i in range(len(index_degree)):
-        diff = abs(index_degree[i]*5 - gt_degree[i])
+        diff = abs(index_degree[i]*step - gt_degree[i])
         diff = min(diff, 360 - diff)
         result += diff
         if diff <= 45:
@@ -89,9 +89,9 @@ def continous_comp_deg_error(output, gt_degree):
                         mid += 1
                         if diff <= 5:
                             excellent += 1
-    return result/len(output), excellent, mid, poor_225, poor, poor_45, gt_degree, index_degree*5, len(output)
+    return result, excellent, mid, poor_225, poor, poor_45, gt_degree, index_degree*step, len(output)
 
-def comp_deg_error(output, degree):
+def comp_deg_error(output, degree, step):
     result = 0
     degree = degree.argmax(axis = 1)
     # index_degree is the prediction
@@ -102,7 +102,7 @@ def comp_deg_error(output, degree):
     poor = 0
     poor_45 = 0
     for i in range(len(index_degree)):
-        diff = abs(index_degree[i] - degree[i]) * 5
+        diff = abs(index_degree[i] - degree[i]) * step
         diff = min(diff, 360 - diff)
         result += diff
         if diff <= 45:
@@ -115,7 +115,7 @@ def comp_deg_error(output, degree):
                         mid += 1
                         if diff <= 5:
                             excellent += 1
-    return result/len(output), excellent, mid, poor_225, poor, poor_45,degree*5 ,index_degree * 5, len(output)
+    return result, excellent, mid, poor_225, poor, poor_45,degree*step ,index_degree * step, len(output)
 
 
 
